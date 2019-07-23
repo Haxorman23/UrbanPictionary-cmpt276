@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<!-- You can use the command rake routes to get the path! -->
+<html>
+	<head>
+		<style>
+			.canvasFrame {
+				position: relative;
+				border-style: solid;
+				height: 500px;
+				width: 750px;
+				top: 0px;
+				left: 300px;
+			}
+
+			.buttons {
+				position: relative;
+				border-style: none;
+				height: 100px;
+				width: 200px;
+
+			}
+
+			.wordGenerated {
+				position: absolute;
+				padding-top: 1px;
+				border-style: none;
+				height: 50px;
+				width: 200px;
+				top: 520px;
+				left: 350px;
+			}
+
+			.wordInstruction {
+				position: absolute;
+				border-style: none;
+				height: 50px;
+				width:50px;
+				top: 520px;
+				left:300px;
+			}
+
+			.wordScrambler {
+				position: absolute;
+				border-style: none;
+				height: 75px;
+				width: 175px;
+				top: 520px;
+				left: 0px;
+			}
+
+		</style>
+	</head>
+
+	<% if signed_in? %>
+	<body>
+		<div class = "canvasFrame">
+			<div id="canvas">
+				<!-- 
+					<div class = "wordInstruction">
+						<p>Draw:</p>
+					</div>
+
+					<div class = "wordGenerated">
+						<p id="UrbanWord"></p>
+					</div>
+				-->
+					<div class = "wordScrambler">
+						<button onclick="scrambleWord()"> New Word </button>
+					</div>
+			</div>
+			
+			<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script> 
+			<script>
+				/*
+				acknowledgements: 
+				http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/
+
+				modified to work with this project
+				*/
+
+				//init & vars
+				var canvasDiv = document.getElementById('canvas');
+				var canvas = document.createElement('canvas');
+				var paint = false;
+
+				var color1 = "#010101";
+				var color2 = "#fc0000";
+				var color3 = "#00fc0b";
+				var color4 = "#08cffb";
+				var color5 = "#cf08fb";
+				var color6 = "#ffc100";
+				var curColor = "#e0e5ec";
+
+				var clickX = new Array();
+				var clickY = new Array();
+				var clickDrag = new Array();
+				var clickColor = new Array();
+
+				canvas.setAttribute("width","750");
+				canvas.setAttribute("height","500");
+				canvas.setAttribute("id","canvas");
+				canvas.style.backgroundColor = "#e0e5ec";
+				canvasDiv.appendChild(canvas);
+				if(typeof $_vmlCanvasManager!='undefined'){
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				context = canvas.getContext("2d");
+
+				//draw if button down
+				$("#canvas").mousedown(function(evt){
+					console.log("mouse down pressed");
+					var mousePos = getMousePos(canvas, evt);
+					var mouseX = getMouseX(mousePos);
+					var mouseY = getMouseY(mousePos);
+					paint = true;									
+					addClick(mouseX, mouseY);
+					draw();
+				});
+
+				//draw if button down and mouse dragged
+				$("#canvas").mousemove(function(evt){
+					if(paint){
+						var mousePos = getMousePos(canvas, evt);
+						var mouseX = getMouseX(mousePos);
+						var mouseY = getMouseY(mousePos);
+						addClick(mouseX,mouseY,true);
+						draw();
+					}
+				});
+
+				//stop drawing if mouse button up
+				$("#canvas").mouseup(function(evt){
+					console.log("mouse up");
+					paint = false;
+				});
+
+				//stop drawing if leaving canvas
+				$("#canvas").mouseleave(function(evt){
+					paint = false;
+				});
+
+				function addClick(x,y,dragging){
+					clickX.push(x);
+					clickY.push(y);
+					clickDrag.push(dragging);
+					clickColor.push(curColor);
+				}
+
+				//calculates mouse coordinates
+				function getMousePos(canvas, evt){
+						var rect = canvas.getBoundingClientRect();
+						return{
+								x:evt.clientX-rect.left,
+								y:evt.clientY-rect.top
+						};
+				}
+
+				function getMouseX(mousePos){
+					var mouseX = mousePos.x;
+					return mouseX;
+				}
+
+				function getMouseY(mousePos){
+					var mouseY = mousePos.y;
+					return mouseY;
+				}
+
+				function clearCanvas(){
+					console.log("clear canvas");
+					context.clearRect(0,0,context.canvas.width,context.canvas.height);
+					clickX.length = 0;
+					clickY.length = 0;
+					clickDrag.length = 0;
+					clickColor.length = 0;
+				}
+
+				function swapColor1(){
+					console.log("swap to color",color1);
+					curColor = color1;
+				}
+
+				function swapColor2(){
+					console.log("swap to color",color2);
+					curColor = color2;
+				}
+
+				function swapColor3(){
+					console.log("swap to color",color3);
+					curColor = color3;
+				}
+
+				function swapColor4(){
+					console.log("swap to color",color4);
+					curColor = color4;
+				}
+
+				function swapColor5(){
+					console.log("swap to color",color5);
+					curColor = color5;					
+				}
+
+				function swapColor6(){
+					console.log("swap to color",color6);
+					curColor = color6;					
+				}
+
+				//draw function
+				function draw(){
+					context.clearRect(0,0,context.canvas.width,context.canvas.height);
+					context.lineJoin = "round";
+					context.lineWidth = 5;
+
+					for(var i=0; i<clickX.length; i++){
+						context.beginPath();
+						//console.log("loop color",clickColor[i]);
+						if(clickDrag[i] && i>0){
+							context.moveTo(clickX[i-1],clickY[i-1]);
+						} else {
+							context.moveTo(clickX[i]-1,clickY[i]);
+						}
+						context.strokeStyle = clickColor[i];
+						context.lineTo(clickX[i],clickY[i]);
+						context.closePath();
+						context.stroke();
+					}
+				}
+
+				//word-related functions
+				//var word = "";
+				//document.getElementById("UrbanWord").innerHTML = word;
+				//var word_list = new Array();
+
+				/*
+					note to people handling the API:
+					var word is initially empty so no words are shown
+					until the button is pressed to generate a word
+					using the API, please insert the words into the
+					array word_list using a for loop. (i+1) is placeholder.
+
+				*/
+				//var word_bank_len = 5;
+				//for(var i=0; i<word_bank_len; i++){
+				//	word_list.push(i+1);
+				//}
+				
+				function scrambleWord(){
+					//word = word_list[Math.floor(Math.random()*word_bank_len)];
+					//document.getElementById("UrbanWord").innerHTML = word;
+
+					//temporary fix
+					location.reload();
+
+				}
+
+
+			</script>
+		</div>
+
+
+		<div class = "buttons">
+			<button onclick="clearCanvas()"> Clear </button>
+			<br>
+			<button onclick="swapColor1()"> Black </button>
+			<button onclick="swapColor2()"> Red </button>
+			<button onclick="swapColor3()"> Green </button>
+			<br>
+			<button onclick="swapColor4()"> Blue </button>
+			<button onclick="swapColor5()"> Purple </button>
+			<button onclick="swapColor6()"> Gold </button>
+		</div>
+		
+		<div class = "display_word">
+			<h2> Randomly Generated Word <br> </h2>
+			<%require 'urban_dictionary'%>
+			<%str_arr = ["golly", "gosh", "frick", "darn", "heck", "gosh darn", "slay", "fiddlesticks", "shooketh"]%>
+			<%index = rand(9)%>
+			<%element = str_arr[index]%>
+			<%word = UrbanDictionary.define(element)%>
+			<%word.entries.size # => 7%>
+			<h1>
+				<%=word.word%>
+			</h1>
+			<%=word.entries[0].definition%>
+			<%=word.entries[0].example%>
+			<br>
+			<br>
+			<br>
+		</div>
+
+	</body>
+	<% end %>
+
+</html>

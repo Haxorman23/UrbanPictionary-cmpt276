@@ -1,0 +1,21 @@
+current directory: F:/Ruby/lib/ruby/gems/2.5.0/gems/puma-3.12.1/ext/puma_http11
+F:/Ruby/bin/ruby.exe -r ./siteconf20190609-5180-1aer6n1.rb extconf.rb
+checking for BIO_read() in -lcrypto... no
+checking for BIO_read() in -llibeay32... no
+creating Makefile
+
+current directory: F:/Ruby/lib/ruby/gems/2.5.0/gems/puma-3.12.1/ext/puma_http11
+make "DESTDIR=" clean
+
+current directory: F:/Ruby/lib/ruby/gems/2.5.0/gems/puma-3.12.1/ext/puma_http11
+make "DESTDIR="
+generating puma_http11-x64-mingw32.def
+compiling http11_parser.c
+compiling io_buffer.c
+compiling mini_ssl.c
+compiling puma_http11.c
+linking shared-object puma/puma_http11.so
+
+current directory: F:/Ruby/lib/ruby/gems/2.5.0/gems/puma-3.12.1/ext/puma_http11
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 puma_http11.so ./.gem.20190609-5180-1fok302/puma

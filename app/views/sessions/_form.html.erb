@@ -1,0 +1,46 @@
+<!DOCTYPE html>  
+<html>
+
+    <font color = ecec3a>
+    <%= form_for :session, url: session_path do |form| %>
+    
+      <div class="row">
+          <div class="column">
+              <div class="text-field">
+                  &nbsp; <%= form.label :email %><br>
+                  &nbsp; <%= form.text_field :email, type: 'email' %>
+              </div>
+
+              <div class="password-field">
+                  &nbsp; <%= form.label :password %><br>
+                  &nbsp; <%= form.password_field :password %>
+              </div>
+
+              <div class="submit-field">
+                  <br> &nbsp; <%= form.submit %>
+              </div>
+      	      <br>
+              <div class="other-links">
+                  <% if Clearance.configuration.allow_sign_up? %>
+                    &nbsp; <%= link_to t(".sign_up"), sign_up_path %>
+                  <% end %>
+                  &nbsp; <%= link_to t(".forgot_password"), new_password_path %>
+              </div>
+          </div>
+          <div class="column">
+              <div class="block_img">            
+                  <%= image_tag("pencil.JPG",:style => ' display: block;
+                  width: 500px;
+                  padding-top: 1px;
+                  padding-right: 0px;
+                  padding-bottom: 0px;
+                  padding-left: 0px;')%>      
+              </div>
+          </div>
+      </div>
+    <% end %>
+  </font>
+
+
+
+</html>

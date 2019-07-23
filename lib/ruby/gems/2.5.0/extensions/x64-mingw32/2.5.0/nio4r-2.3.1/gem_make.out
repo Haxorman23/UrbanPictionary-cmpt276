@@ -1,0 +1,14 @@
+current directory: F:/Ruby/lib/ruby/gems/2.5.0/gems/nio4r-2.3.1/ext/nio4r
+F:/Ruby/bin/ruby.exe -r ./siteconf20190609-15032-uh964u.rb extconf.rb
+
+current directory: F:/Ruby/lib/ruby/gems/2.5.0/gems/nio4r-2.3.1/ext/nio4r
+make "DESTDIR=" clean
+make: *** No rule to make target 'clean'.  Stop.
+
+current directory: F:/Ruby/lib/ruby/gems/2.5.0/gems/nio4r-2.3.1/ext/nio4r
+make "DESTDIR="
+make: Nothing to be done for 'all'.
+
+current directory: F:/Ruby/lib/ruby/gems/2.5.0/gems/nio4r-2.3.1/ext/nio4r
+make "DESTDIR=" install
+make: Nothing to be done for 'install'.

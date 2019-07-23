@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+      <head>
+            <title>Urban Pictionary</title>
+            <%= csrf_meta_tags %>
+            <%= csp_meta_tag %>
+
+            <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+            <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+        <style>
+		
+                body{
+			background-color:#127DC1;
+                }
+		
+		.button {
+			background-color: #F8CC75;
+  			color: #127DC1;
+  			padding: 5px 10px;
+  			text-align: center;
+  			text-decoration: none;
+  			display: inline-block;
+		}
+		
+		.button:hover {
+			background-color: yellow;
+		}
+
+		div {
+			font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+			font-size: 12px;
+			color: #ffffff
+		}
+		
+
+		a:link, a:visited {
+			font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+			font-size: 12px;
+  			background-color: #F8CC75;
+  			color: #127DC1;
+  			padding: 5px 10px;
+  			text-align: center;
+  			text-decoration: none;
+  			display: inline-block;
+		}
+
+		a:hover, a:active {
+  			background-color: yellow;
+		}
+
+		p {
+			font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+			font-size: 16px;
+		}
+		
+		h2 {
+			font-family:georgia,garamond,serif;
+			font-size: 20px;
+			font-style:italic;
+			color: #F8CC75;
+		}
+		h3 {
+			font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+			font-size: 10px;
+			color: #ffffff;
+		}
+
+		  .column{
+          		float: left;
+          		width: 33.3%;
+          		padding: 1px;
+        	}
+
+        	.row::after{
+          		content: "";
+          		clear: both;
+          		display: table;
+        	}
+
+        	.block_img{
+         		 padding-left: 0px;
+        	}
+		
+
+        </style>
+
+      </head>
+
+      <body>
+	
+	
+	<!--
+        <h1 style = "font-family:georgia,garamond,serif;font-size:50px;font-style:italic;" align = "center">
+            <font color=ECEC3A> Urban Pictionary </font>
+	
+        </h1>
+	-->
+	
+	<div align = "center">
+		<%= image_tag("UP-logo.jpg",:style => ' display: block;
+            	width: 20%; padding-top: 10px;
+            	padding-right: 0px;
+            	padding-bottom: 24px;
+            	padding-left: 8px;')%>
+	</div>
+
+	
+	
+	&nbsp;
+	<%= link_to 'Home', root_path %>  
+	&nbsp;
+
+        <% if signed_in? %>
+	<h3>
+            <font color=ffffff> Signed in as: <%= current_user.email %>   </font>
+	</h3>
+            <%= button_to 'Sign out', sign_out_path, method: :delete %>
+	
+        <% else %>
+            <%= link_to 'Sign in', sign_in_path %>
+		
+        <% end %>
+
+	
+	
+
+        <div id="flash">
+            <% flash.each do |key, value| %>
+                <div class="flash <%= key %>"><%= value%></div>
+            <% end %>
+        </div>
+        <!-- end of added section -->
+
+        <%= yield %>
+
+      </body>
+	  
+	  <!-- Wow I'm stressed out :D -->
+	  
+</html>
+

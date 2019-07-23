@@ -1,0 +1,2 @@
+U:RDoc::Attr[iI"vertical_boundary:ETI""Text::Table#vertical_boundary;TI"RW;T:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;	[I"4The vertical boundary.  Default is "<tt>-</tt>";T:
+@fileI"lib/text-table/table.rb;T:0@omit_headings_from_table_of_contents_below0F@I"Text::Table;TcRDoc::NormalClass0
